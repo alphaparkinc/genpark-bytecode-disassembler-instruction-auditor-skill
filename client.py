@@ -16,8 +16,16 @@ class BytecodeAuditor:
     def __init__(self):
         pass
 
-    def audit_code_object(self, code_obj: types.CodeType) -> Dict[str, Any]:
+    def _get_all_instructions(self, code_obj: types.CodeType) -> List[dis.Instruction]:
+        """Recursively collect instructions across top-level and nested code objects."""
         instructions = list(dis.get_instructions(code_obj))
+        for const in code_obj.co_consts:
+            if isinstance(const, types.CodeType):
+                instructions.extend(self._get_all_instructions(const))
+        return instructions
+
+    def audit_code_object(self, code_obj: types.CodeType) -> Dict[str, Any]:
+        instructions = self._get_all_instructions(code_obj)
         opnames = [i.opname for i in instructions]
         loaded_names = {i.argval for i in instructions if i.opname in ["LOAD_NAME", "LOAD_GLOBAL"]}
 
