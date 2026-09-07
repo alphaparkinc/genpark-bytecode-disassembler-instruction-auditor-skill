@@ -1,0 +1,15 @@
+{
+  "name": "genpark-bytecode-disassembler-instruction-auditor-skill",
+  "version": "1.0.0",
+  "description": "Python bytecode disassembler analyzing opcodes and security hot-spots.",
+  "author": "GenPark AI",
+  "license": "Apache-2.0",
+  "dependencies": [],
+  "keywords": [
+    "bytecode",
+    "disassembler",
+    "opcode-analysis",
+    "security-audit",
+    "static-analysis"
+  ]
+}
